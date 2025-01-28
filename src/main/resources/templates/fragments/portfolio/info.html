@@ -1,0 +1,66 @@
+<!-- Information Section -->
+<div th:fragment="info" id="info" class="info-section bg-warning">
+    <style>
+        /* Styling for the Information Section */
+        .info-section {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            border-radius: 50px 0 0 0;
+            /* Fixed width for the section */
+            box-sizing: border-box;
+            padding: 10px;
+            z-index: 1000;
+            /* Ensure it appears on top of other elements */
+            display: flex;
+            flex-direction: column;
+            /* Arrange items in a column (vertical) */
+            align-items: center;
+            /* Center align the icons horizontally */
+            gap: 10px;
+            /* Add space between icons */
+        }
+
+        .info-section .icon {
+            width: 100%;
+            height: auto;
+            max-height: 50px;
+            /* Ensure icons fit within the desired height */
+            object-fit: contain;
+            /* Maintain aspect ratio */
+        }
+    </style>
+
+    <!-- GitHub Icon -->
+    <div class="icon-container text-center">
+        <a th:href="${'https://github.com/'+user?.information?.github}" target="_blank">
+            <img class="icon" src="/github.png" alt="GitHub">
+        </a>
+    </div>
+
+    <!-- LinkedIn Icon -->
+    <div class="icon-container text-center">
+        <a th:href="${'https://www.linkedin.com/in/'+user?.information?.linkedIn}" target="_blank">
+            <img class="icon" src="/linkedin.png" alt="LinkedIn">
+        </a>
+    </div>
+
+    <!-- WhatsApp Icon -->
+<!-- WhatsApp Icon -->
+<div class="icon-container text-center">
+    <a
+        th:href="'https://wa.me/' + ${user?.information?.contactNumber} + '?text=Hello%20there%20I%20would%20like%20to%20connect%20with%20you.'">
+        <img class="icon" src="/whatsapp.png" alt="WhatsApp">
+    </a>
+</div>
+
+
+    <!-- Email Icon -->
+    <div class="icon-container text-center">
+        <a th:href="'mailto:' + ${user?.email}">
+            <img class="icon" src="/mail.png" alt="Mail">
+        </a>
+    </div>
+
+</div>

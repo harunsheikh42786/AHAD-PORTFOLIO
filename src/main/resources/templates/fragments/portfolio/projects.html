@@ -1,0 +1,77 @@
+<div th:fragment="projects" id="projects" class="container-fluid vh-100">
+    <h3 class="text-light mb-4">Projects</h3>
+    <div id="projects-container" class="overflow-auto container" style="height: calc(100vh - 100px);">
+        <!-- Iterate through each project -->
+        <div class="mb-4" th:each="project : ${user?.projects}">
+            <div class="row border shadow-sm bg-transparent rounded align-items-center p-3" style="background:linear-gradient(rgba(71, 71, 71, 0.7),rgba(0,0,0,0.7));">
+                <!-- Carousel Section -->
+                <div class="col-md-4 col-12 text-center mb-3 mb-md-0">
+                    <div id="carousel${project.id}" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div th:each="image, iterStat : ${project?.imagePaths}"
+                                th:classappend="${iterStat.index == 0} ? 'active'" class="carousel-item">
+                                <img th:src="@{${image}}" class="d-block img-fluid rounded w-80 mx-auto"
+                                    alt="Project Image" />
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel${project.id}"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carousel${project.id}"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Details Section -->
+                <div class="col-md-8 col-12 text-danger">
+                    <h4 class="text-success fw-bold" th:text="${project?.name}">Project Name</h4>
+                    <p class="text-light mb-3" th:text="${project?.description}">Short description of the project.</p>
+
+                    <h6 class="mb-2">Technologies:</h6>
+                    <ul class="list-inline">
+                        <li class="badge bg-secondary me-1 mb-2" th:each="tech : ${project?.technologies}"
+                            th:text="${tech}">Technology</li>
+                    </ul>
+
+                    <h6 class="mb-2">Responsibilities:</h6>
+                    <p class="text-light" th:text="${project?.responsibilities}">Brief about user contributions.</p>
+
+                    <h6 class="mb-2">Status:</h6>
+                    <p>
+                        <span th:if="${project?.isOngoing}" class="badge bg-warning">Ongoing</span>
+                        <span th:if="!${project?.isOngoing}" class="badge bg-success">Completed</span>
+                    </p>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <a th:href="${project?.repositoryLink}" class="btn btn-outline-light fw-bold btn-sm" target="_blank">View
+                            Code</a>
+                        <a th:href="${project?.demoLink}" class="btn btn-outline-primary fw-bold btn-sm" target="_blank">View
+                            Demo</a>
+                    </div>
+
+                    <h6 class="mt-3">Team Members:</h6>
+                    <p class="text-light">
+                        <span th:each="member : ${project?.teamMembers}" th:text="${member}" class="me-2">Member Name</span>
+                    </p>
+                    <div class="d-flex gap-3 mt-2">
+                        <!-- Update Button -->
+                        <a th:href="${'/portfolio/update-project/'+project.id}"
+                            class="btn btn-outline-success rounded-circle d-flex align-items-center justify-content-center shadow">
+                            <i class="bi bi-pen fs-5"></i>
+                        </a>
+                        <!-- Remove Button -->
+                        <a th:href="${'/portfolio/remove-project/'+project?.id}"
+                            class="btn btn-outline-danger rounded-circle d-flex align-items-center justify-content-center shadow">
+                            <i class="bi bi-trash fs-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

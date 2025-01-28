@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::title}, ~{::style}, ~{::script}, ~{::#content})}">
+
+<head>
+    <title th:text="'Sign-In Page'">Sign-In Page</title>
+
+    <!-- Custom Styles -->
+    <th:block th:fragment="style">
+        <style>
+            body {
+                margin: 0;
+                /* display: flex;
+                align-items: center;
+                justify-content: center; */
+                background: linear-gradient(rgba(0, 0, 0, 0.651), rgba(30, 74, 41, 0.405)), url('/bg.jpg');
+                background-size: cover;
+                background-position: center;
+                color: white;
+            }
+
+            .form-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background-color: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+                width: 80%;
+                max-width: 900px;
+            }
+
+            .pointer-men {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .form-section {
+                padding: 15px;
+                border-left: 8px solid rgb(149, 191, 153);
+                border-radius: 20px;
+            }
+
+            h3 {
+                color: #fff;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+
+            label {
+                color: #ddd;
+                font-weight: 600;
+            }
+
+            .form-control {
+                background-color: rgba(255, 255, 255, 0.2);
+                border: none;
+                color: #fff;
+            }
+
+            .form-control:focus {
+                box-shadow: none;
+                background-color: rgba(255, 255, 255, 0.3);
+                color: #fff;
+            }
+
+            .btn-primary {
+                background-color: #6c63ff;
+                border: none;
+            }
+
+            .btn-primary:hover {
+                background-color: #574ede;
+            }
+
+            .btn-warning {
+                border: none;
+            }
+
+            a.text-primary {
+                color: #6c63ff;
+            }
+
+            a.text-primary:hover {
+                color: #574ede;
+            }
+        </style>
+    </th:block>
+</head>
+
+<body>
+    <div id="content" class="container-fluid vh-100 d-flex justify-content-center align-items-center">
+        <div class="form-container">
+            <!-- Left Section: Image -->
+            <div class="col-md-4 text-center">
+                <img class="pointer-men" src="/pointer-men.png" alt="Pointer Icon">
+            </div>
+            
+            <!-- Right Section: Form -->
+            <div class="form-section col-md-8">
+                <form th:action="@{/authenticate}" method="post">
+                <h3 class="text-center">Sign In</h3>
+                <div class="form-group text-center bg-light fw-bold">
+                    <p th:text="${message?.content}" th:class="'text-' + ${message?.type} + ' m-2'"></p>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email"
+                    required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" name="password" id="password" class="form-control"
+                    placeholder="Enter your password" required>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-primary col-5" type="submit">Login</button>
+                    <button class="btn btn-warning col-5" type="reset">Reset</button>
+                </div>
+                <div class="mt-3 text-center">
+                    <a href="/sign-up" class="text-decoration-none text-light">Don't have an account? Sign up
+                        here.</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+        
+        <!-- JavaScript -->
+        <th:block th:fragment="script">
+        <script>
+            console.log("Sign-In Page Loaded");
+        </script>
+    </th:block>
+</body>
+
+</html>

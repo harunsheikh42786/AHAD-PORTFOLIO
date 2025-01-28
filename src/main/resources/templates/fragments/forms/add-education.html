@@ -1,0 +1,96 @@
+<div th:fragment="education-form" class="container my-4">
+    <form th:action="@{/portfolio/add-education}" method="post" class="p-4 shadow-sm rounded">
+        <div class="form-group text-center bg-light fw-bold">
+            <p th:text="${message?.content}" th:class="'text-' + ${message?.type} + ' m-2'"></p>
+        </div>
+        
+        <input type="text" class="form-control d-none" id="id" name="id" th:value="${education?.id}">
+        <!-- Degree -->
+        <div class="mb-3">
+            <label for="degree" class="form-label fw-bold">Degree</label>
+            <input type="text" class="form-control" id="degree" name="degree" placeholder="E.g., B.Tech, M.Sc." th:value="${education?.degree}"
+                required>
+        </div>
+
+        <!-- Degree Type -->
+        <div class="mb-3">
+            <label for="degreeType" class="form-label fw-bold">Degree Type</label>
+            <select class="form-select" id="degreeType" name="degreeType" required>
+                <option th:selected="${education?.degreeType == null}" value="" disabled selected>Select degree type</option>
+                <option th:selected="${education?.degreeType == 'FULL_TIME'}" value="FULL_TIME">Full-Time</option>
+                <option th:selected="${education?.degreeType == 'PART_TIME'}" value="PART_TIME">Part-Time</option>
+                <option th:selected="${education?.degreeType == 'DISTANCE'}" value="DISTANCE">Distance Education</option>
+            </select>
+        </div>
+
+        <!-- Board/University -->
+        <div class="mb-3">
+            <label for="board" class="form-label fw-bold">Board/University</label>
+            <input type="text" class="form-control" id="board" name="board" placeholder="E.g., Delhi University, CBSE" th:value="${education?.board}"
+                required>
+        </div>
+
+        <!-- Result Type -->
+        <div class="mb-3">
+            <label for="cgpaType" class="form-label fw-bold">Result Type</label>
+            <select class="form-select" id="cgpaType" name="cgpaType" required>
+                <option th:selected="${education?.cgpaType == null}" value="" disabled selected>Select result type</option>
+                <option th:selected="${education?.cgpaType == 'CGPA'}" value="CGPA">CGPA</option>
+                <option th:selected="${education?.cgpaType == 'PERCENTAGE'}" value="PERCENTAGE">Percentage</option>
+            </select>
+        </div>
+
+        <!-- CGPA / Percentage Inputs -->
+        <div class="row g-2">
+            <div class="col d-none" id="cgpaInput">
+                <label for="cgpa" class="form-label fw-bold">CGPA</label>
+                <input type="number" class="form-control" id="cgpa" name="cgpa" step="0.01" placeholder="Enter CGPA" th:value="${education?.cgpa}">
+            </div>
+            <div class="col d-none" id="percentageInput">
+                <label for="percentage" class="form-label fw-bold">Percentage</label>
+                <input type="number" class="form-control" id="percentage" name="percentage" step="0.01" th:value="${education?.percentage}"
+                    placeholder="Enter percentage">
+            </div>
+        </div>
+
+        <!-- Start and End Dates -->
+        <div class="row g-2 mt-3">
+            <div class="col">
+                <label for="startDate" class="form-label fw-bold">Start Date</label>
+                <input type="date" class="form-control" id="startDate" name="startDate" th:value="${education?.startDate}" required>
+            </div>
+            <div class="col">
+                <label for="endDate" class="form-label fw-bold">End Date</label>
+                <input type="date" class="form-control" id="endDate" name="endDate" th:value="${education?.endDate}" required>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-end mt-4">
+            <button type="submit" class="btn btn-success col px-4">Add Education</button>
+            <button type="reset" class="btn btn-warning col px-4">Reset</button>
+        </div>
+    </form>
+
+    <!-- Script for Dynamic Field Toggle -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const cgpaTypeSelect = document.getElementById("cgpaType");
+            const cgpaInput = document.getElementById("cgpaInput");
+            const percentageInput = document.getElementById("percentageInput");
+
+            cgpaTypeSelect.addEventListener("change", () => {
+                if (cgpaTypeSelect.value === "CGPA") {
+                    cgpaInput.classList.remove("d-none");
+                    percentageInput.classList.add("d-none");
+                } else if (cgpaTypeSelect.value === "PERCENTAGE") {
+                    percentageInput.classList.remove("d-none");
+                    cgpaInput.classList.add("d-none");
+                } else {
+                    cgpaInput.classList.add("d-none");
+                    percentageInput.classList.add("d-none");
+                }
+            });
+        });
+    </script>
+</div>

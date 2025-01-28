@@ -1,0 +1,155 @@
+<div th:fragment="jobStatus" id="jobStatuses" class="container-fluid vh-100">
+    <h3 class="text-light mb-4">Job Status Details</h3>
+    <div id="job-statuses-container" class="overflow-auto container" style="height: calc(100vh - 100px);">
+        <!-- Iterate through each job status -->
+        <div class="mb-4" th:each="job : ${user?.jobStatuses}">
+            <div class="row border shadow-sm bg-transparent rounded align-items-center p-3" style="background:linear-gradient(rgba(26, 33, 35, 0.599),rgba(0,0,0,0.7));">
+                <!-- Carousel Section -->
+                <div class="col-md-4 col-12 text-center mb-3 mb-md-0">
+                    <div id="carousel${job.id}" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div th:each="image, iterStat : ${job?.imagePaths}"
+                                th:classappend="${iterStat.index == 0} ? 'active'" class="carousel-item">
+                                <img th:src="@{${image}}" class="d-block img-fluid rounded w-80 mx-auto"
+                                    alt="Job Image" />
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel${job.id}"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carousel${job.id}"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Details Section -->
+                <div class="col-md-8 col-12 text-danger">
+                    <h4 class="text-white fw-bold" th:text="${job?.position}">Position Title</h4>
+                    
+                    <div class="row">
+                        <div class="col-3">
+                            <h6 class="mb-2">Company:</h6>
+                        </div>
+                        <div class="col-9">
+                            <p class="text-warning fw-bold" th:text="${job?.company}">Company Name</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-3">
+                            <h6 class="mb-2">Location:</h6>
+                        </div>
+                        <div class="col-9">
+                            <p class="text-light" th:text="${job?.location}">Location</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-3">
+                            <h6 class="mb-2">Job Type:</h6>
+                        </div>
+                        <div class="col-9">
+                            <p class="text-light" th:text="${job?.jobType}">Full-time/Part-time</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-3">
+                            <h6 class="mb-2">Start Date:</h6>
+                        </div>
+                        <div class="col-9">
+                            <p class="text-light" th:text="${job?.startDate}">Start Date</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-3">
+                            <h6 class="mb-2">End Date:</h6>
+                        </div>
+                        <div class="col-9">
+                            <p class="text-light">
+                                <span th:if="${job?.endDate != null}" th:text="${job?.endDate}">End Date</span>
+                                <span th:if="${job?.endDate == null}">Present</span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Fields to be displayed in a single row -->
+                    <div class="row">
+                        <div class="col-3">
+                            <h6 class="mb-2">Salary:</h6>
+                        </div>
+                        <div class="col-9">
+                            <p class="text-light" th:text="${job?.salary}">Salary</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-3">
+                            <h6 class="mb-2">Is Current Job:</h6>
+                        </div>
+                        <div class="col-9">
+                            <p class="text-light" th:text="${job?.isCurrentJob}">Current Job</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-3">
+                            <h6 class="mb-2">Is Fresher:</h6>
+                        </div>
+                        <div class="col-9">
+                            <p class="text-light" th:text="${job?.isFresher}">Fresher Status</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-3">
+                            <h6 class="mb-2">Responsibilities:</h6>
+                        </div>
+                        <div class="col-9">
+                            <p class="text-light" th:text="${job?.responsibilities}">Fresher Status</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-3">
+                            <h6 class="mb-2">Certifications:</h6>
+                        </div>
+                        <div class="col-9">
+                            <p class="text-light" th:text="${job?.certifications}">Fresher Status</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-3">
+                            <h6 class="mb-2">Status:</h6>
+                        </div>
+                        <div class="col-9">
+                            <p class="text-light">
+                                <span th:if="${job?.isCurrentJob}" class="badge bg-success">Active</span>
+                                <span th:if="!${job?.isCurrentJob}" class="badge bg-danger">Inactive</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3">
+                        <!-- Update Button -->
+                        <a th:href="${'/portfolio/update-job-status/'+job?.id}"
+                            class="btn btn-outline-primary rounded-circle d-flex align-items-center justify-content-center shadow">
+                            <i class="bi bi-pen fs-5"></i>
+                        </a>
+                        <!-- Remove Button -->
+                        <a th:href="${'/portfolio/remove-job-status/'+job?.id}"
+                            class="btn btn-outline-danger rounded-circle d-flex align-items-center justify-content-center shadow">
+                            <i class="bi bi-trash fs-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

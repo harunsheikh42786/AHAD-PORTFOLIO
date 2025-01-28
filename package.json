@@ -1,0 +1,16 @@
+{
+  "name": "ahad-portfolio",
+  "version": "1.0.0",
+  "description": "My PortFolio Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Harun",
+  "license": "ISC",
+  "dependencies": {
+    "ahad-portfolio": "file:",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3"
+  }
+}

@@ -1,0 +1,120 @@
+<div th:fragment="project-form" class="container my-4">
+    <form th:action="@{/portfolio/add-project}" method="post" enctype="multipart/form-data"
+        class="p-3 shadow-sm rounded">
+        <div class="form-group text-center bg-light fw-bold">
+            <p th:text="${message?.content}" th:class="'text-' + ${message?.type} + ' m-2'"></p>
+        </div>
+        <input type="text" class="form-control d-none" id="id" name="id" th:value="${project?.id}" placeholder="Enter project id" readonly>
+        <!-- Project Name -->
+        <div class="mb-2">
+            <label for="projectName" class="form-label fw-bold">Project Name</label>
+            <input type="text" class="form-control" id="projectName" name="name" th:value="${project?.name}" placeholder="Enter project name"
+                required>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-2">
+            <label for="description" class="form-label fw-bold">Description</label>
+            <textarea class="form-control" id="description" name="description" th:text="${project?.description}" rows="3" placeholder="Brief overview"
+                required></textarea>
+        </div>
+
+        <!-- Technologies Used -->
+        <div class="mb-2">
+            <label for="technologies" class="form-label fw-bold">Technologies Used</label>
+            <input type="text" class="form-control" id="technologies" name="technologies" th:value="${project?.technologies}"
+                placeholder="E.g., Java, Spring Boot" required>
+        </div><!-- Team Members -->
+        <div class="mb-2">
+            <label for="teamMembers" class="form-label fw-bold">Team Members</label>
+            <input type="text" class="form-control" id="teamMembers" name="teamMembers" th:value="${project?.teamMembers}"
+                placeholder="Enter team members' names separated by commas" required>
+        </div>
+
+        <!-- Dates -->
+        <div class="row g-2">
+            <div class="col">
+                <label for="startDate" class="form-label fw-bold">Start Date</label>
+                <input type="date" class="form-control" id="startDate" name="startDate" th:value="${project?.startDate}" required>
+            </div>
+            <div class="col">
+                <label for="endDate" class="form-label fw-bold">End Date</label>
+                <input type="date" class="form-control" id="endDate" name="endDate" th:value="${project?.endDate}">
+            </div>
+        </div>
+
+        <!-- Is Ongoing -->
+        <div class="form-check form-switch my-2">
+            <input type="checkbox" class="form-check-input" id="isOngoing" name="isOngoing"
+                th:checked="${project?.isOngoing}" />
+            <label class="form-label fw-bold" for="isOngoing">Ongoing Project?</label>
+        </div>
+
+        <!-- Responsibilities -->
+        <div class="mb-3">
+            <label for="responsibilities" class="form-label fw-bold">Responsibilities</label>
+            <input type="text" class="form-control" id="responsibilities" name="responsibilities" th:value="${project?.responsibilities}"
+                placeholder="Enter job responsibilities">
+        </div>
+
+        <!-- Status -->
+        <div class="mb-2">
+            <label for="status" class="form-label fw-bold">Status</label>
+            <select class="form-select" id="status" name="status" required>
+                <option value="" disabled th:selected="${project?.status == null}">Select status</option>
+                <option value="Completed" th:selected="${project?.status == 'Completed'}">Completed</option>
+                <option value="In Progress" th:selected="${project?.status == 'In Progress'}">In Progress</option>
+                <option value="On Hold" th:selected="${project?.status == 'On Hold'}">On Hold</option>
+            </select>
+        </div>
+
+        <!-- Repository and Demo Links -->
+        <div class="row g-2 mb-2">
+            <div class="col">
+                <label for="repositoryLink" class="form-label fw-bold">Repo Link</label>
+                <input type="url" class="form-control" id="repositoryLink" name="repositoryLink" th:value="${project?.repositoryLink}"
+                    placeholder="https://github.com/...">
+            </div>
+            <div class="col">
+                <label for="demoLink" class="form-label fw-bold">Demo Link</label>
+                <input type="url" class="form-control" id="demoLink" name="demoLink" th:value="${project?.demoLink}"
+                    placeholder="https://your-demo.com">
+            </div>
+        </div>
+
+        <div class="form-section">
+            <!-- Image Upload Section 1 -->
+            <div class="d-flex align-items-center mb-3">
+                <label for="images1"
+                    class="form-label fw-bold text-center text-white btn btn-primary d-inline-flex align-items-center justify-content-center px-4 py-2 me-3"
+                    style="font-size: 1.2rem;">
+                    <i class="bi bi-image me-2"></i> Select Image
+                </label>
+                <input type="file" class="form-control d-none image-input" name="images1" id="images1" accept="image/*"
+                    multiple>
+            </div>
+            <div th:each="imagePath : ${project?.imagePaths}" class="d-inline-flex justify-content-center align-items-center p-1"
+                style="border: 2px solid #28a745;">
+                <div style="position: relative;" class="image-preview" th:attr="data-image-path=${imagePath}">
+                    <!-- Display Image -->
+                    <img th:src="@{${imagePath}}" alt="Image"
+                        style="width: 100px; height: 100px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+                    <!-- Delete Button -->
+                    <button type="button" class="btn btn-danger btn-sm" style="position: absolute; top: 5px; right: 5px;"
+                        onclick="removeProjectImage(this)">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <small class="text-muted">You can upload up to 5 images (PNG, JPG).</small>
+            <div class="preview-container d-flex mt-3" style="gap: 10px; flex-wrap: wrap;"></div>
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="text-end">
+            <button type="submit" class="btn btn-success col px-4">Add Project</button>
+            <button type="reset" class="btn btn-warning col px-4">Reset</button>
+        </div>
+    </form>
+    
+</div>

@@ -1,0 +1,142 @@
+<div th:fragment="job-form" class="container my-4">
+    <form th:action="@{/portfolio/add-job-status}" method="post" enctype="multipart/form-data"
+        class="p-4 shadow-sm rounded">
+        <!-- Display any message -->
+        <div class="form-group text-center bg-light fw-bold">
+            <p th:text="${message?.content}" th:class="'text-' + ${message?.type} + ' m-2'"></p>
+        </div>
+
+        <!-- Hidden JobStatus ID -->
+        <input type="hidden" id="jobStatusId" name="id" th:value="${jobStatus?.id}" />
+
+        <!-- Job Position -->
+        <div class="mb-3">
+            <label for="position" class="form-label fw-bold">Position</label>
+            <input type="text" class="form-control" id="position" name="position" placeholder="Enter job title"
+                th:value="${jobStatus?.position}" required />
+        </div>
+
+        <!-- Company Name -->
+        <div class="mb-3">
+            <label for="company" class="form-label fw-bold">Company Name</label>
+            <input type="text" class="form-control" id="company" name="company" placeholder="Enter company name"
+                th:value="${jobStatus?.company}" required />
+        </div>
+
+        <!-- Location -->
+        <div class="mb-3">
+            <label for="location" class="form-label fw-bold">Location</label>
+            <input type="text" class="form-control" id="location" name="location" placeholder="Enter job location"
+                th:value="${jobStatus?.location}" />
+        </div>
+
+        <!-- Responsibilities -->
+        <div class="mb-3">
+            <label for="responsibilities" class="form-label fw-bold">Responsibilities</label>
+            <textarea class="form-control" id="responsibilities" name="responsibilities" rows="3"
+                placeholder="Enter job responsibilities" th:text="${jobStatus?.responsibilities}"></textarea>
+        </div>
+
+        <!-- Job Type -->
+        <div class="mb-3">
+            <label for="jobType" class="form-label fw-bold">Job Type</label>
+            <select class="form-select" id="jobType" name="jobType" required>
+                <option value="" disabled th:selected="${jobStatus?.jobType == null}">Select job type</option>
+                <option value="Full-Time" th:selected="${jobStatus?.jobType == 'Full-Time'}">Full-Time</option>
+                <option value="Part-Time" th:selected="${jobStatus?.jobType == 'Part-Time'}">Part-Time</option>
+                <option value="Internship" th:selected="${jobStatus?.jobType == 'Internship'}">Internship</option>
+                <option value="Contract" th:selected="${jobStatus?.jobType == 'Contract'}">Contract</option>
+            </select>
+        </div>
+
+        <!-- Dates -->
+        <div class="row g-2">
+            <div class="col">
+                <label for="startDate" class="form-label fw-bold">Start Date</label>
+                <input type="date" class="form-control" id="startDate" name="startDate"
+                    th:value="${jobStatus?.startDate}" required />
+            </div>
+            <div class="col">
+                <label for="endDate" class="form-label fw-bold">End Date</label>
+                <input type="date" class="form-control" id="endDate" name="endDate" th:value="${jobStatus?.endDate}" />
+            </div>
+        </div>
+
+        <!-- Current Job -->
+        <div class="form-check form-switch my-3">
+            <input type="checkbox" class="form-check-input" id="isCurrentJob" name="isCurrentJob"
+                th:checked="${jobStatus?.isCurrentJob}" />
+            <label class="form-label fw-bold" for="isCurrentJob">Is this your current job?</label>
+        </div>
+
+        <!-- Fresher Status -->
+        <div class="form-check form-switch my-3">
+            <input type="checkbox" class="form-check-input" id="isFresher" name="isFresher"
+                th:checked="${jobStatus?.isFresher}" />
+            <label class="form-label fw-bold" for="isFresher">Are you a fresher?</label>
+        </div>
+
+        <!-- Salary -->
+        <div class="mb-3">
+            <label for="salary" class="form-label fw-bold">Salary</label>
+            <input type="number" class="form-control" id="salary" name="salary" placeholder="Enter salary amount"
+                th:value="${jobStatus?.salary}" />
+        </div>
+
+        <!-- Skills -->
+        <div class="mb-3">
+            <label for="skills" class="form-label fw-bold">Skills</label>
+            <input type="text" class="form-control" id="skills" name="skills"
+                placeholder="Enter skills (comma-separated)" th:value="${jobStatus?.skills}" />
+        </div>
+
+        <!-- Projects -->
+        <div class="mb-3">
+            <label for="projects" class="form-label fw-bold">Projects</label>
+            <textarea class="form-control" id="projects" name="projects" rows="3"
+                placeholder="Enter major projects or accomplishments" th:text="${jobStatus?.projects}"></textarea>
+        </div>
+
+        <!-- Certifications -->
+        <div class="mb-3">
+            <label for="certifications" class="form-label fw-bold">Certifications</label>
+            <textarea class="form-control" id="certifications" name="certifications" rows="3"
+                placeholder="Enter certifications earned during the job"
+                th:text="${jobStatus?.certifications}"></textarea>
+        </div>
+
+        <div class="form-section">
+            <!-- Image Upload Section 2 -->
+            <div class="d-flex align-items-center mb-3">
+                <label for="images2"
+                    class="form-label fw-bold text-center text-white btn btn-primary d-inline-flex align-items-center justify-content-center px-4 py-2 me-3"
+                    style="font-size: 1.2rem;">
+                    <i class="bi bi-image me-2"></i> Select Image
+                </label>
+                <input type="file" class="form-control d-none image-input" name="images2" id="images2" accept="image/*"
+                    multiple>
+            </div>
+            <div th:each="imagePath : ${jobStatus?.imagePaths}" class="d-inline-flex justify-content-center align-items-center p-1"
+                style="border: 2px solid #28a745;">
+                <div style="position: relative;" class="image-preview" th:attr="data-image-path=${imagePath}">
+                    <!-- Display Image -->
+                    <img th:src="@{${imagePath}}" alt="Image"
+                        style="width: 100px; height: 100px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+                    <!-- Delete Button -->
+                    <button type="button" class="btn btn-danger btn-sm" style="position: absolute; top: 5px; right: 5px;"
+                        onclick="removeJobImage(this)">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <small class="text-muted">You can upload up to 5 images (PNG, JPG).</small>
+            <div class="preview-container d-flex mt-3" style="gap: 10px; flex-wrap: wrap;"></div>
+        </div>
+
+        <!-- Submit Buttons -->
+        <div class="text-end mt-4">
+            <button type="submit" class="btn btn-success px-4">Save Job</button>
+            <button type="reset" class="btn btn-warning px-4">Reset</button>
+        </div>
+    </form>
+</div>

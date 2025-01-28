@@ -1,0 +1,160 @@
+<!-- Sidebar content -->
+<div th:fragment="sidebar" class="sidebar d-flex flex-column bg-dark vh-100"
+    style="height: 100vh; position: sticky; top: 0;">
+    <style>
+        .sidebar{
+            z-index: 1;
+        }
+        a,
+        .a-font {
+            font-size: 20px;
+        }
+
+        .anchor {
+            font-weight: 500;
+            margin: 2px 10px;
+            padding: 10px 20px;
+
+            a {
+                color: white;
+            }
+        }
+
+        /* Responsive padding for anchor items */
+
+        /* Hover effect */
+        .anchor:hover , .active{
+            background: rgb(15, 188, 23);
+            border-radius: 5px;
+            color: white;
+        }
+
+        .middle-sidebar {
+            background-color: rgba(255, 255, 255, 0.068);
+        }
+
+        .bottom-sidebar {
+            background-color: rgba(255, 255, 255, 0.105);
+        }
+    </style>
+
+    <!-- Middle Sidebar Links -->
+    <div class="middle-sidebar flex-grow-1">
+        <div id="home" class="anchor"><a th:href="@{'/'}"><i class="bi bi-house"></i></a></div>
+        <div id="add-details" class="anchor"><a th:href="@{'/user/add-details'}"><i class="bi bi-cloud-plus"></i></a></div>
+        <div id="profile" class="anchor"><a th:href="@{'/user/profile'}"><i class="bi bi-person-circle"></i></a></div>
+        <div id="portfolio" class="anchor"><a th:href="@{'/user/portfolio'}"><i class="bi bi-person-lines-fill"></i></a></div>
+        <div id="" class="anchor"><a th:href="@{'#intro'}"><i class="bi bi-link"></i></a></div>
+        <div id="" class="anchor"><a th:href="@{'#education'}"><i class="bi bi-book"></i></a></div>
+        <div id="" class="anchor"><a th:href="@{'#projects'}"><i class="bi bi-folder2"></i></a></div>
+        <div id="" class="anchor"><a th:href="@{'#jobStatuses'}"><i class="bi bi-person-workspace"></i></a></div>
+        <div id="" class="anchor"><a th:href="@{'#download'}"><i class="bi bi-download"></i></a></div>
+    </div>
+
+    <!-- Bottom Sidebar Links -->
+    <div class="bottom-sidebar p-3 mt-auto">
+        <div class="mb-2"><a th:href="@{'/sign-up'}" class="btn btn-success w-100 a-font" type="button"><i
+                    class="bi bi-person-plus"></i></a></div>
+        <div class="mb-2"><a th:href="@{'/login'}" class="btn btn-primary w-100 a-font" type="button"><i
+                    class="bi bi-box-arrow-in-right"></i></a></div>
+        <div>
+            <button id="logoutButton" class="btn btn-danger w-100 a-font" type="button">
+                <i class="bi bi-box-arrow-in-left"></i>
+            </button>
+        </div>
+        <!-- Custom Confirmation Dialog -->
+        <div id="confirmationDialog" class="confirmation-dialog text-dark">
+            <div class="dialog-content">
+                <h5 class="text-light">Confirm Logout</h5>
+                <p class="text-light">Are you sure you want to logout?</p>
+                <div class="dialog-buttons">
+                    <button id="cancelButton" class="btn btn-secondary">Cancel</button>
+                    <a th:href="@{'/do-logout'}" class="btn btn-danger">Logout</a>
+                </div>
+            </div>
+        </div>
+        
+        <style>
+            /* Overlay Effect */
+            .confirmation-dialog {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.6);
+                z-index: 1050;
+                justify-content: center;
+                align-items: center;
+            }
+        
+            /* Dialog Box */
+            .dialog-content {
+                background-color: rgba(0, 0, 0, 0.8);
+                /* Darkened background for consistency */
+                border-radius: 10px;
+                padding: 30px;
+                width: 400px;
+                text-align: center;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            }
+        
+            .dialog-content h5 {
+                color: #fff;
+                font-weight: bold;
+            }
+        
+            .dialog-content p {
+                color: #ddd;
+                margin-bottom: 20px;
+            }
+        
+            /* Buttons */
+            .dialog-buttons {
+                margin-top: 20px;
+                display: flex;
+                justify-content: space-around;
+            }
+        
+            .btn-secondary,
+            .btn-danger {
+                background-color: rgba(255, 255, 255, 0.3);
+                border: none;
+                color: #fff;
+                font-weight: bold;
+            }
+        
+            .btn-danger {
+                background-color: #e74c3c;
+            }
+        
+            .btn-danger:hover {
+                background-color: #c0392b;
+            }
+        
+            .btn-secondary:hover {
+                background-color: rgba(255, 255, 255, 0.5);
+            }
+        </style>
+        
+        <script>
+            const logoutButton = document.getElementById("logoutButton");
+            const confirmationDialog = document.getElementById("confirmationDialog");
+            const cancelButton = document.getElementById("cancelButton");
+
+            // Show dialog on Logout button click
+            logoutButton.addEventListener("click", () => {
+                confirmationDialog.style.display = "flex"; // Show dialog
+            });
+
+            // Hide dialog on Cancel button click
+            cancelButton.addEventListener("click", () => {
+                confirmationDialog.style.display = "none"; // Hide dialog
+            });
+        </script>
+
+
+
+    </div>
+</div>

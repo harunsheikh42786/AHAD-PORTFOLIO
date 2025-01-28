@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::title}, ~{::style}, ~{::script}, ~{::#content})}">
+
+<head>
+    <title th:text="'Sign-In Page'">Sign-In Page</title>
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(rgba(49, 154, 45, 0.614), rgba(0, 0, 0, 0.414)), url('/bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content" class="container-fluid vh-100 d-flex justify-content-center align-items-center">
+        <div class="container text-center px-3">
+            <img th:src="@{/logo.png}" alt="Logo" class="img-fluid mx-auto d-block"
+                style="max-width: 67%; height: auto;">
+            <p class="mt-2 mx-5 px-lg-5 text-light">
+                <b>AHAD-PORTFOLIO WEB</b> is a sleek and user-friendly platform for showcasing personal or business portfolios, allowing
+                seamless presentation of work, projects, and achievements.
+            </p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.getElementById('home')?.classList.add('active');
+    </script>
+</body>
+
+</html>

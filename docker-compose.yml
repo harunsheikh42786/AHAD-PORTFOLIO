@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: ahad-portfolio-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234  # Set MySQL root password
+      MYSQL_DATABASE: ahad_portfolio  # Optional: Set default database
+    ports:
+      - "3307:3306"  # Mapping host port 3307 to container port 3306
+    networks:
+      - app-network
+
+  ahad-portfolio:
+    image: ahad-portfolio-ahad-portfolio
+    container_name: ahad-portfolio
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/ahad_portfolio  # MySQL service URL
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Harun@786
+    ports:
+      - "8080:8080"  # Exposing port 8080
+    depends_on:
+      - mysql  # Ensure MySQL starts first
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

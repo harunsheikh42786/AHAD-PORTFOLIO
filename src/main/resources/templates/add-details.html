@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en"
+    th:replace="~{base :: parent(~{::title}, ~{::style}, ~{::script}, ~{::#content})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9; /* Light background for reduced eye strain */
+    }
+
+    .nav-tabs .nav-link {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #6c757d; /* Muted dark background for tabs */
+        border-radius: 5px 5px 0 0;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .nav-tabs .nav-link.active {
+        background-color: #28a745; /* Green accent for active tab */
+        color: white;
+    }
+
+    .nav-tabs .nav-link:hover {
+        background-color: #28a745; /* Blue accent on hover */
+        color: white;
+    }
+
+    .tab-content {
+        background-color: #ffffff; /* White background for tab content */
+        border: 1px solid #dee2e6;
+        padding: 20px;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    }
+
+    form{
+        background-color:  rgb(238 238 238)  !important;
+    }
+
+    .form-label {
+        color: #495057; /* Muted dark text for labels */
+        font-weight: bold;
+    }
+
+    .form-control, 
+    .form-select {
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        transition: border-color 0.2s;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #28a745; /* Green focus border */
+        box-shadow: 0 0 5px rgba(40, 167, 69, 0.2);
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #212529;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+        border-color: #d39e00;
+    }
+
+    .btn {
+        border-radius: 5px;
+    }
+
+    .text-muted {
+        font-size: 0.85rem;
+        color: #6c757d;
+    }
+
+    .nav-item {
+        margin: 5px;
+    }
+
+    .text-end button {
+        margin-left: 10px;
+    }
+    .preview-image {
+            max-width: 150px;
+            max-height: 150px;
+            object-fit: fit;
+        }
+    
+        .image-preview-container {
+            position: relative;
+        }
+    
+        #previewContainer1 .border-dashed {
+            min-width: 150px;
+            min-height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+</style>
+
+</head>
+
+<body>
+    <div id="content" class="container-fluid bg-dark">
+        <div class="card p-0">
+            <!-- Tabs Navigation -->
+            <ul class="nav nav-tabs text-center" id="dynamicTabs" role="tablist">
+                <li class="nav-item col" role="presentation">
+                    <a class="nav-link active" id="tabAddProject" data-bs-toggle="tab" href="#addProject" role="tab"
+                    aria-controls="addProject" aria-selected="true">Add Project</a>
+                </li>
+                <li class="nav-item col" role="presentation">
+                    <a class="nav-link" id="tabAddJobStatus" data-bs-toggle="tab" href="#addJobStatus" role="tab"
+                    aria-controls="addJobStatus" aria-selected="false">Add Job Status</a>
+                </li>
+                <li class="nav-item col" role="presentation">
+                    <a class="nav-link" id="tabAddEducation" data-bs-toggle="tab" href="#addEducation" role="tab"
+                    aria-controls="addEducation" aria-selected="false">Add Education</a>
+                </li>
+                <li class="nav-item col" role="presentation">
+                    <a class="nav-link" id="tabAddResume" data-bs-toggle="tab" href="#addResume" role="tab"
+                    aria-controls="addResume" aria-selected="false">Add Resume</a>
+                </li>
+            </ul>
+            
+            <!-- Tabs Content -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="addProject" role="tabpanel" aria-labelledby="tabAddProject">
+                    <div th:replace="~{fragments/forms/add-project :: project-form}"></div>
+                </div>
+                <div class="tab-pane" id="addJobStatus" role="tabpanel" aria-labelledby="tabAddJobStatus">
+                    <div th:replace="~{fragments/forms/add-job-details :: job-form}"></div>
+                </div>
+                <div class="tab-pane" id="addEducation" role="tabpanel" aria-labelledby="tabAddEducation">
+                    <div th:replace="~{fragments/forms/add-education :: education-form}"></div>
+                </div>
+                <div class="tab-pane" id="addResume" role="tabpanel" aria-labelledby="tabAddResume">
+                    <div th:replace="~{fragments/forms/add-resume :: resume-form}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+       function removeProjectImage(button) {
+            // Get the parent div that contains the image preview
+            const imageDiv = button.closest('.image-preview');
+
+            // Get the image path from the data-image-path attribute
+            const imagePath = imageDiv.getAttribute('data-image-path');
+
+            // Get the projectId from the hidden input
+            const projectId = document.getElementById('id').value;
+
+            // Debugging: Log values to console
+            console.log("Project ID:", projectId);
+            console.log("Image Path:", imagePath);
+
+            // Confirm values are correct before proceeding
+            if (!projectId || !imagePath) {
+                alert("Project ID or Image Path is missing.");
+                return;
+            }
+
+            // Confirm deletion
+            if (!confirm("Are you sure you want to remove this image?")) {
+                return;
+            }
+
+            // API Call to Remove Image
+            fetch('/portfolio/remove-project-image', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ projectId, imagePath })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // Remove the image preview from the DOM
+                        imageDiv.remove();
+                        alert("Image removed successfully!");
+                    } else {
+                        response.text().then((message) => {
+                            alert(`Failed to remove image: ${message}`);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error("Error removing image:", error);
+                    alert("An error occurred while removing the image.");
+                });
+        }
+
+        function removeJobImage(button) {
+                // Get the parent div containing the image preview
+                const imageDiv = button.closest('.image-preview');
+
+                // Ensure the div exists and contains the data-image-path attribute
+                if (!imageDiv || !imageDiv.hasAttribute('data-image-path')) {
+                    alert("Image element not found or missing image path.");
+                    return;
+                }
+
+                // Extract the image path
+                const imagePath = imageDiv.getAttribute('data-image-path');
+
+                // Get the JobStatus ID from the hidden input field
+                const jobStatusId = document.getElementById('jobStatusId')?.value;
+
+                // Debugging: Log values for verification
+                console.log("JobStatus ID:", jobStatusId);
+                console.log("Image Path:", imagePath);
+
+                // Check if values are present
+                if (!jobStatusId || !imagePath) {
+                    alert("JobStatus ID or Image Path is missing.");
+                    return;
+                }
+
+                // Confirm deletion
+                if (!confirm("Are you sure you want to remove this image?")) {
+                    return;
+                }
+
+                // Perform DELETE request
+                fetch('/portfolio/remove-job-status-image', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                        // Uncomment if CSRF token is required:
+                        // 'X-CSRF-Token': document.querySelector('meta[name="_csrf"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ jobStatusId, imagePath })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Remove the image preview div from the DOM
+                            imageDiv.remove();
+                            alert("Image removed successfully!");
+                        } else {
+                            // Parse and show error message
+                            response.text().then(message => alert(`Failed to remove image: ${message}`));
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error removing image:", error);
+                        alert("An error occurred while removing the image. Please try again.");
+                    });
+            }
+
+            /*------------------------------------------------------------------------*/
+
+        document.addEventListener("change", (event) => {
+            // Check if the event target is an input with class "image-input"
+            if (event.target.classList.contains("image-input")) {
+                const input = event.target; // The current input
+                const formSection = input.closest(".form-section"); // Find the closest form section
+                const previewContainer = formSection.querySelector(".preview-container"); // Target preview container
+
+                const files = Array.from(input.files);
+
+                // Check if adding these files exceeds the limit of 5 images
+                const currentImagesCount = previewContainer.children.length;
+                if (currentImagesCount + files.length > 5) {
+                    alert("You can only upload up to 5 images.");
+                    input.value = ""; // Clear the input
+                    return;
+                }
+
+                // Clear existing previews in this container
+                previewContainer.innerHTML = "";
+
+                files.forEach((file) => {
+                    if (!file.type.startsWith("image/")) return;
+
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const imgWrapper = document.createElement("div");
+                        imgWrapper.style.position = "relative";
+                        imgWrapper.style.width = "150px";
+                        imgWrapper.style.height = "150px";
+                        imgWrapper.style.border = "1px solid #ccc";
+
+                        const img = document.createElement("img");
+                        img.src = e.target.result;
+                        img.style.width = "100%";
+                        img.style.height = "100%";
+                        img.style.objectFit = "cover";
+
+                        const deleteButton = document.createElement("button");
+                        deleteButton.innerHTML = "<i class='bi bi-trash'></i>";
+                        deleteButton.style.position = "absolute";
+                        deleteButton.style.top = "5px";
+                        deleteButton.style.right = "5px";
+                        deleteButton.style.background = "#ff0000";
+                        deleteButton.style.color = "#fff";
+                        deleteButton.style.border = "none";
+                        deleteButton.style.cursor = "pointer";
+                        deleteButton.style.padding = "5px";
+
+                        deleteButton.addEventListener("click", () => {
+                            imgWrapper.remove();
+                        });
+
+                        imgWrapper.appendChild(img);
+                        imgWrapper.appendChild(deleteButton);
+                        previewContainer.appendChild(imgWrapper);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        });
+
+        document.getElementById('add-details')?.classList.add('active');
+</script>
+   
+</body>
+
+</html>

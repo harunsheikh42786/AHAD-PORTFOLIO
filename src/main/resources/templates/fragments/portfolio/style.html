@@ -1,0 +1,176 @@
+<th:block th:fragment="portfolio-style">
+    <style>
+        #intro {
+            background: linear-gradient(rgba(177, 177, 177, 0.651), rgba(49, 161, 57, 0.405)), url('/bg.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 30%;
+        }
+    
+        #education {
+            background: linear-gradient(rgba(22, 24, 30, 0.405), rgba(0, 0, 0, 0.761)), url('/bg-tech.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 30%;
+        }
+    
+        #projects {
+            background: linear-gradient(rgba(0, 0, 0, 0.764), rgba(0, 0, 0, 0.569)), url('/bg-project.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 30%;
+            background-position-x: center;
+            background-clip: border-box;
+        }
+    
+        #jobStatuses {
+            background: linear-gradient(rgba(53, 108, 111, 0.549), rgba(0, 0, 0, 0.844)), url('/bg-job-status.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 30%;
+        }
+    
+        /* Default Style (Desktop and Large Screens) */
+        .profile-image {
+            width: 280px;
+            height: 280px;
+            object-fit: cover;
+            padding: 5px;
+            border: 4px solid rgba(255, 255, 255, 0.283);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 0 auto;
+            /* Center align */
+        }
+    
+        .profile-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+        }
+    
+        #content {
+            background: linear-gradient(to bottom, #1a1a1a, #333);
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+    
+        /* Heading and Text Adjustments */
+        #intro h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+    
+        #intro p {
+            font-size: 1.2rem;
+        }
+    
+        /* Buttons */
+        .btn {
+            border-radius: 30px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+    
+        .btn-success:hover {
+            background-color: #45a049;
+        }
+    
+        .btn-outline-light:hover {
+            background-color: white;
+            color: black;
+        }
+    
+        /* Tablet Screens (768px to 1024px) */
+        @media (max-width: 1024px) {
+            .profile-image {
+                width: 200px;
+                height: 200px;
+            }
+    
+            #intro h1 {
+                font-size: 2.5rem;
+            }
+    
+            #intro p {
+                font-size: 1.1rem;
+            }
+        }
+    
+        /* Mobile Screens (450px to 767px) */
+        @media (max-width: 750px) {
+            .profile-image {
+                width: 150px;
+                height: 150px;
+            }
+    
+            #intro h1 {
+                font-size: 2rem;
+            }
+    
+            #intro p {
+                font-size: 1rem;
+            }
+    
+            .btn {
+                font-size: 0.9rem;
+                padding: 10px 20px;
+            }
+        }
+    
+        /* Extra Small Screens (Up to 450px) */
+        @media (max-width: 450px) {
+            .profile-image {
+                width: 120px;
+                height: 120px;
+            }
+    
+            #intro h1 {
+                font-size: 1.8rem;
+            }
+    
+            #intro p {
+                font-size: 0.9rem;
+            }
+    
+            .btn {
+                font-size: 0.8rem;
+                padding: 8px 16px;
+            }
+        }
+    
+        #download {
+            background: linear-gradient(rgba(14, 51, 17, 0.49), rgba(0, 0, 0, 0.569)), url('/logo.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: 30%;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+    
+        footer img {
+            transition: transform 0.3s ease;
+        }
+    
+        footer img:hover {
+            transform: scale(1.1);
+        }
+    
+        footer a {
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+    
+        footer a:hover {
+            color: #45a049;
+            transform: scale(1.1);
+        }
+    
+        footer .btn-outline-light {
+            border: 2px solid white;
+            color: white;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+    
+        footer .btn-outline-light:hover {
+            background-color: white;
+            color: black;
+        }
+    </style>
+</th:block>

@@ -1,0 +1,69 @@
+<div th:fragment="resume-form" class="container my-4 vh-100 d-flex justify-content-center align-items-center overflow-auto">
+    <form th:action="@{/user/upload-resume}" method="post" enctype="multipart/form-data"
+        class="p-4 shadow rounded text-center bg-light" style="max-width: 600px; margin: auto;">
+        <!-- Display any message -->
+        <div class="form-group text-center mb-4">
+            <p th:text="${message?.content}" th:class="'text-' + ${message?.type} + ' m-2'" class="m-0"></p>
+        </div>
+    
+        <!-- Resume Upload -->
+        <div class="my-4">
+            <label for="resume" class="btn btn-outline-danger fs-2 px-5 py-3">
+                <i class="bi bi-filetype-pdf"></i> Upload Resume
+            </label>
+            <input type="file" class="form-control d-none" id="resume" name="resume" accept=".pdf,.doc,.docx" onchange="previewFile()" required />
+            <p class="text-muted mt-2">Accepted formats: PDF, DOC, DOCX. Max size: 5MB</p>
+        </div>
+
+        <!-- Display Resume Preview -->
+        <div class="mb-3">
+            <div id="filePreview"></div> <!-- This will show the preview -->
+        </div>
+    
+        <!-- Display Resume Name -->
+        <div class="my-3">
+            <input type="text" class="form-control text-center" id="resumeName" disabled placeholder="No file selected" />
+        </div>
+    
+        <!-- Submit Button -->
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary px-5 py-3">
+                <i class="bi bi-upload me-2"></i> Submit
+            </button>
+        </div>
+    </form>
+
+    
+    <!-- JavaScript to show the selected file name and preview -->
+    <script>
+        function previewFile() {
+            var fileInput = document.getElementById('resume');
+            var fileNameInput = document.getElementById('resumeName');
+            var filePreviewDiv = document.getElementById('filePreview');
+        var file = fileInput.files[0];
+
+        if (file) {
+            // Display file name
+            fileNameInput.value = file.name;
+
+            // Clear any previous previews
+            filePreviewDiv.innerHTML = "";
+            
+            // If the file is a PDF, show a PDF preview
+            if (file.type === "application/pdf") {
+                var pdfPreview = document.createElement('embed');
+                pdfPreview.src = URL.createObjectURL(file);
+                pdfPreview.width = "100%";
+                pdfPreview.height = "400px";
+                filePreviewDiv.appendChild(pdfPreview);
+            } else if (file.type === "application/msword" || file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+                // For DOC/DOCX files, show the file name only (since we can't preview them)
+                filePreviewDiv.innerHTML = "<small class='text-muted'>File preview not available for DOC/DOCX files.</small>";
+            } else {
+                // Handle other files (if any)
+                filePreviewDiv.innerHTML = "<small class='text-muted'>Preview not available for this file type.</small>";
+            }
+            }
+        }
+    </script>
+</div>

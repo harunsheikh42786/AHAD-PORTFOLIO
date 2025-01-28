@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::title}, ~{::style}, ~{::script}, ~{::#content})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Page</title>
+    </head>
+    
+    <body>
+        <style th:replace="~{fragments/portfolio/style :: portfolio-style}"></style>
+        <div id="content" class="bg-dark h-100">
+            <div id="intro" class="container-fluid vh-100 d-flex flex-column justify-content-center">
+                <!-- Row for Name and Profile Image -->
+                <div class="row align-items-center justify-content-between mb-5">
+                    <div class="col-md-6 text-center">
+                        <img th:src="${user?.imagePath != null ? user.imagePath : '/default-profile.png'}" alt="Profile Image" class="img-fluid rounded-circle shadow-lg profile-image">
+                    </div>
+                    <div class="col-md-6 text-light text-md-start">
+                        <h1 class="display-4 mb-3 text-sm-center">Hi, I am</h1>
+                        <h1 class="display-4 mb-3 text-sm-center"><span class="fw-semibold text-success" th:text="${user?.firstname + ' ' + user?.middlename}"></span></h1>
+                    </div>
+                </div>
+            
+                <!-- Row for Buttons and Description -->
+                <div class="row justify-content-center text-center">
+                    <div class="col-12 col-md-6 mb-4">
+                        <a href="#profile" class="btn btn-success btn-lg">Show Profile</a>
+                        <a href="#projects" class="btn btn-outline-light btn-lg">Explore More</a>
+                    </div>
+                    <p class="col-8 mt-3 text-light lead">
+                        I am a passionate software developer with expertise in Java and web development. Focused on building
+                        scalable and efficient solutions.
+                    </p>
+                </div>
+            </div>
+
+        <div th:replace="~{fragments/portfolio/info :: info}"></div>
+        <div th:replace="~{fragments/portfolio/education :: education}"></div>
+        <div th:replace="~{fragments/portfolio/projects :: projects}"></div>
+        <div th:replace="~{fragments/portfolio/jobStatuses :: jobStatus}"></div>
+        <div th:replace="~{fragments/portfolio/download :: download}"></div>
+        
+    </div>
+
+    <script>
+        document.getElementById('portfolio')?.classList.add('active');
+    </script>
+</body>
+
+</html> 

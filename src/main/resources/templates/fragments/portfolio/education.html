@@ -1,0 +1,44 @@
+<div th:fragment="education" id="education" class="container-fluid vh-100">
+    <h3 class="section-title text-light text-start mb-4">Education Details</h3>
+
+    <!-- Add a wrapper to make the section scrollable -->
+    <div class="education-wrapper container" style="max-height: 600px; overflow-y: auto;">
+        <div class="row">
+            <!-- Iterate through the list of education -->
+            <div class="col-md-12" th:each="education : ${user?.education}">
+                <div class="education-item p-4 mb-4 border rounded shadow-sm bg-transparent" style="background:linear-gradient(rgba(28, 50, 63, 0.7),rgba(0,0,0,0.7));">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="degree-title text-success" th:text="${education?.degree}"></h5>
+                        <span class="degree-type text-warning" th:text="${education?.degreeType}"></span>
+                    </div>
+
+                    <p class="university text-warning fw-bold mb-1" th:text="${education?.board}"></p>
+
+                    <div class="d-flex justify-content-between text-light">
+                        <span class="cgpa-type" th:text="${education?.cgpaType}"></span>
+                        <span class="cgpa text-primary fw-bold" th:if="${education?.cgpa}" th:text="${education?.cgpa}"></span>
+                        <span class="percentage text-primary fw-bold" th:if="${education?.percentage}" th:text="${education?.percentage + ' %'}"></span>
+                    </div>
+
+                    <!-- Dates section -->
+                    <div class="dates mt-1 text-light">
+                        <span class="start-date" th:text="${education?.startDate}"></span> -
+                        <span class="end-date" th:text="${education?.endDate}"></span>
+                    </div>
+                    <div class="d-flex gap-3 mt-2">
+                        <!-- Update Button -->
+                        <a th:href="${'/portfolio/update-education/'+education.id}"
+                            class="btn btn-outline-success rounded-circle d-flex align-items-center justify-content-center shadow">
+                            <i class="bi bi-pen fs-5"></i>
+                        </a>
+                        <!-- Remove Button -->
+                        <a th:href="${'/portfolio/remove-education/'+education?.id}"
+                            class="btn btn-outline-danger rounded-circle d-flex align-items-center justify-content-center shadow">
+                            <i class="bi bi-trash fs-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
