@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ahad.entities.JobStatus;
 import com.ahad.entities.User;
+import com.ahad.exeptions.HelperMessages;
 import com.ahad.helper.FileService;
 import com.ahad.helper.Message;
 import com.ahad.sevices.JobStatusService;
@@ -74,10 +75,10 @@ public class JobStatusController {
             jobStatus.setImagePaths(imagePaths);
             if (!jobStatus.getId().isEmpty()) {
                 this.jobStatusService.updateJobStatusByAddingImages(jobStatus, principal);
-                model.addAttribute("message", new Message("JobStatus Successfully Updated.", "success"));
+                model.addAttribute("message", new Message(HelperMessages.JOBSTATUS_UPDATE_SUCCESS, "success"));
             } else {
                 this.jobStatusService.createJobStatus(jobStatus, principal);
-                model.addAttribute("message", new Message("JobStatus Successfully Added.", "success"));
+                model.addAttribute("message", new Message(HelperMessages.JOBSTATUS_ADD_SUCCESS, "success"));
             }
 
         } catch (Exception e) {
@@ -100,9 +101,9 @@ public class JobStatusController {
     public String updateJobStatus(@ModelAttribute("JobStatus") JobStatus jobStatus, Model model, Principal principal) {
         JobStatus createdJobStatus = this.jobStatusService.updateJobStatusByAddingImages(jobStatus, principal);
         if (createdJobStatus != null) {
-            model.addAttribute("message", new Message("JobStatus Successfully Updated.", "success"));
+            model.addAttribute("message", new Message(HelperMessages.JOBSTATUS_UPDATE_SUCCESS, "success"));
         } else {
-            model.addAttribute("message", new Message("Sorry, For the inconvinience.", "danger"));
+            model.addAttribute("message", new Message(HelperMessages.JOBSTATUS_ERROR, "danger"));
         }
         return "add-details";
     }
@@ -111,9 +112,9 @@ public class JobStatusController {
     public String deleteJobStatus(@PathVariable("id") String jobStatusId, Model model, Principal principal) {
         boolean isRemoved = this.jobStatusService.deleteJobStatusById(jobStatusId, principal);
         if (isRemoved) {
-            model.addAttribute("message", new Message("JobStatus Removed Successfully.", "success"));
+            model.addAttribute("message", new Message(HelperMessages.JOBSTATUS_REMOVE_SUCCESS, "success"));
         } else {
-            model.addAttribute("message", new Message("Sorry, For the inconvinience.", "danger"));
+            model.addAttribute("message", new Message(HelperMessages.JOBSTATUS_ERROR, "danger"));
         }
         return "add-details";
     }
@@ -122,9 +123,9 @@ public class JobStatusController {
     public String postMethodName(@PathVariable("id") String id, Model model, Principal principal) {
         JobStatus foundJobStatus = this.jobStatusService.getJobStatus(id);
         if (foundJobStatus != null) {
-            model.addAttribute("message", new Message("JobStatus Successfully Added.", "success"));
+            model.addAttribute("message", new Message(HelperMessages.JOBSTATUS_ADD_SUCCESS, "success"));
         } else {
-            model.addAttribute("message", new Message("Sorry, For the inconvinience.", "danger"));
+            model.addAttribute("message", new Message(HelperMessages.JOBSTATUS_ERROR, "danger"));
         }
         return "add-details";
     }

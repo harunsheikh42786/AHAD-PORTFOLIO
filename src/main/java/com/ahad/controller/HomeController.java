@@ -1,8 +1,6 @@
 package com.ahad.controller;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.ahad.entities.User;
+import com.ahad.exeptions.HelperMessages;
 import com.ahad.helper.Message;
 import com.ahad.sevices.UserService;
 
@@ -46,7 +45,7 @@ public class HomeController {
 
     @GetMapping("/login-failed")
     public String loginFailed(Model model) {
-        model.addAttribute("message", new Message("Check Email or Password. Data not found.", "danger"));
+        model.addAttribute("message", new Message(HelperMessages.USER_NOT_FOUND, "danger"));
         return "login";
     }
 
@@ -60,14 +59,14 @@ public class HomeController {
         User existedUser = this.userService.getUserByEmail(user.getEmail());
         if (existedUser != null) {
             model.addAttribute("message",
-                    new Message("User already registered with this email. You can Sign-in", "success"));
+                    new Message(HelperMessages.USER_ALREADY_EXISTS, "success"));
             return "login";
         } else {
             User created = this.userService.createUser(user);
             if (created != null) {
-                model.addAttribute("message", new Message("You Have successfully Registered.", "success"));
+                model.addAttribute("message", new Message(HelperMessages.USER_REGISTER, "success"));
             } else {
-                model.addAttribute("message", new Message("Sorry, For the inconvinience, Try Later.", "danger"));
+                model.addAttribute("message", new Message(HelperMessages.USER_NOT_REGISTERED, "danger"));
             }
             return "sign-up";
         }

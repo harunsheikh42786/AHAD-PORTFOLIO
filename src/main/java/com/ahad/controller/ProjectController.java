@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ahad.entities.Project;
 import com.ahad.entities.User;
+import com.ahad.exeptions.HelperMessages;
 import com.ahad.helper.FileService;
 import com.ahad.helper.Message;
 import com.ahad.sevices.ProjectService;
@@ -78,10 +79,10 @@ public class ProjectController {
 
             if (!project.getId().isEmpty()) {
                 this.projectService.updateProjectByAddingImage(project);
-                model.addAttribute("message", new Message("Project Successfully updated.", "success"));
+                model.addAttribute("message", new Message(HelperMessages.PROJECT_UPDATE_SUCCESS, "success"));
             } else {
                 this.projectService.createProject(project, principal);
-                model.addAttribute("message", new Message("Project Successfully Added.", "success"));
+                model.addAttribute("message", new Message(HelperMessages.PROJECT_ADD_SUCCESS, "success"));
             }
 
         } catch (Exception e) {
@@ -103,7 +104,7 @@ public class ProjectController {
                 .orElse(null); // Return null if project not found
 
         if (project == null) {
-            model.addAttribute("message", new Message("Project not found!", "danger"));
+            model.addAttribute("message", new Message(HelperMessages.PROJECT_NOT_FOUND, "danger"));
             return "error-page"; // Redirect to error page or show error
         }
 
@@ -124,7 +125,7 @@ public class ProjectController {
                     .filter(a -> a.getId().equals(projectId)).findFirst().orElse(null);
 
             if (project == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Project not found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(HelperMessages.PROJECT_NOT_FOUND);
             }
 
             // Remove the image from the list of image paths
@@ -134,12 +135,12 @@ public class ProjectController {
                 FileService.deleteFile(imagePath);
                 // Save the updated project to the database
                 projectService.updateProjectByRemovingImage(project);
-                return ResponseEntity.ok("Image removed successfully");
+                return ResponseEntity.ok(HelperMessages.PROJECT_IMAGE_REMOVE_SUCCESS);
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Image not found in the project");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(HelperMessages.PROJECT_IMAGE_NOT_FOUND);
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error removing image");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(HelperMessages.PROJECT_IMAGE_ERROR);
         }
     }
 
@@ -147,9 +148,9 @@ public class ProjectController {
     public String deleteProject(@PathVariable("id") String id, Model model, Principal principal) {
         int isRemoved = this.projectService.deleteProjectById(id, principal);
         if (isRemoved != -1) {
-            model.addAttribute("message", new Message("Project Removed Successfully.", "success"));
+            model.addAttribute("message", new Message(HelperMessages.EDUCATION_REMOVE_SUCCESS, "success"));
         } else {
-            model.addAttribute("message", new Message("Sorry, For the inconvinience.", "danger"));
+            model.addAttribute("message", new Message(HelperMessages.PROJECT_ERROR, "danger"));
         }
         return "add-details";
     }
@@ -158,9 +159,9 @@ public class ProjectController {
     public String postMethodName(@PathVariable("id") String id, Model model, Principal principal) {
         Project foundProject = this.projectService.getProjectById(id);
         if (foundProject != null) {
-            model.addAttribute("message", new Message("Project Successfully Added.", "success"));
+            model.addAttribute("message", new Message(HelperMessages.PROJECT_ADD_SUCCESS, "success"));
         } else {
-            model.addAttribute("message", new Message("Sorry, For the inconvinience.", "danger"));
+            model.addAttribute("message", new Message(HelperMessages.PROJECT_ERROR, "danger"));
         }
         return "add-details";
     }

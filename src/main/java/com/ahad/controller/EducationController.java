@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ahad.entities.Education;
 import com.ahad.entities.User;
+import com.ahad.exeptions.HelperMessages;
 import com.ahad.helper.Message;
 import com.ahad.sevices.EducationService;
 import com.ahad.sevices.UserService;
@@ -48,9 +49,10 @@ public class EducationController {
                 this.educationService.createEducation(education, principal);
             }
 
-            model.addAttribute("message", new Message("Education Successfully Added.", "success"));
+            model.addAttribute("message", new Message(HelperMessages.EDUCATION_ADD_SUCCESS, "success"));
         } catch (Exception e) {
-            model.addAttribute("message", new Message("An error occurred: " + e.getMessage(), "danger"));
+            model.addAttribute("message", new Message(
+                    HelperMessages.EDUCATION_ERROR + e.getMessage(), "danger"));
         }
 
         return "add-details";
@@ -67,9 +69,9 @@ public class EducationController {
     public String deleteEducation(@PathVariable("id") String educationId, Model model, Principal principal) {
         boolean isDeleted = this.educationService.deleteEducation(educationId, principal);
         if (isDeleted) {
-            model.addAttribute("message", new Message("Education removed Successfully.", "success"));
+            model.addAttribute("message", new Message(HelperMessages.EDUCATION_REMOVE_SUCCESS, "success"));
         } else {
-            model.addAttribute("message", new Message("Error in removing education.", "danger"));
+            model.addAttribute("message", new Message(HelperMessages.EDUCATION_REMOVE_ERROR, "danger"));
         }
         return "add-details";
     }

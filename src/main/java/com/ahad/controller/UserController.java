@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ahad.entities.Information;
 import com.ahad.entities.User;
+import com.ahad.exeptions.HelperMessages;
 import com.ahad.helper.FileService;
 import com.ahad.helper.Message;
 import com.ahad.sevices.InformationService;
@@ -21,7 +22,6 @@ import com.ahad.sevices.UserService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -67,7 +67,7 @@ public class UserController {
                 }
             }
             this.userService.updateUser(user, principal);
-            model.addAttribute("message", new Message("User Profile Update Successfully.", "success"));
+            model.addAttribute("message", new Message(HelperMessages.USER_PROFILE_UPDATE_SUCCESS, "success"));
         } catch (Exception e) {
             model.addAttribute("message", new Message("Error : " + e.getMessage(), "danger"));
         }
@@ -83,7 +83,7 @@ public class UserController {
             } else {
                 this.informationService.updateInformation(information, principal);
             }
-            model.addAttribute("message", new Message("User Information Update Successfully.", "success"));
+            model.addAttribute("message", new Message(HelperMessages.USER_INFORMATION_UPDATE_SUCCESS, "success"));
         } catch (Exception e) {
             model.addAttribute("message", new Message("Error : " + e.getMessage(), "danger"));
         }
@@ -109,7 +109,7 @@ public class UserController {
             FileService.deleteFile(user.getResume()); // Ensure this method handles the file path properly
             user.setResume(null);
             this.userService.updateUser(user, principal);
-            model.addAttribute("message", new Message("Resume deleted successfully.", "success"));
+            model.addAttribute("message", new Message(HelperMessages.RESUME_DELETE_SUCCESS, "success"));
 
         } catch (Exception e) {
             // Add an error message to the model in case of any exception
@@ -129,7 +129,7 @@ public class UserController {
             // Pass the file name to the service layer for saving it to the user
             this.userService.uploadResume(fileName, principal);
 
-            model.addAttribute("message", new Message("Resume uploaded successfully.", "success"));
+            model.addAttribute("message", new Message(HelperMessages.RESUME_UPLOAD_SUCCESS, "success"));
         } catch (Exception e) {
             model.addAttribute("message", new Message("Error during resume uploading: " + e.getMessage(), "danger"));
         }
