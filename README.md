@@ -66,3 +66,7 @@ Passionate Java & Full-Stack Developer
 Skilled in Spring Boot | React | Angular | MySQL | AI tools
 
 ---
+
+Note :
+Download AHAD-Portfolio-Resource and update it in application.properties folder by providing path
+https://github.com/harunsheikh42786/AHAD-PORTFOLIO-Resource.git
