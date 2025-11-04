@@ -28,9 +28,7 @@
                         <a href="/user/profile" class="btn btn-success btn-lg">Show Profile</a>
                         <a href="#projects" class="btn btn-outline-light btn-lg">Explore More</a>
                     </div>
-                    <p class="col-8 mt-3 text-light lead">
-                        I am a passionate software developer with expertise in Java and web development. Focused on building
-                        scalable and efficient solutions.
+                    <p class="col-8 mt-3 p-2 text-start bg-success bg-opacity-50 text-dark fs-4 lead" style="border-radius: 10px;" th:text="${user?.information?.description}">
                     </p>
                 </div>
             </div>

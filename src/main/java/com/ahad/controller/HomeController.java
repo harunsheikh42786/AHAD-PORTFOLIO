@@ -72,4 +72,15 @@ public class HomeController {
         }
     }
 
+    @GetMapping("/exception-test")
+
+    public String exceptionTest() throws Exception {
+        throw new Exception("This is a test exception");
+    }
+
+    @GetMapping("/sql-exception-test")
+    public String sqlExceptionTest() throws Exception {
+        throw new java.sql.SQLException("This is a test SQL exception");
+    }
+
 }

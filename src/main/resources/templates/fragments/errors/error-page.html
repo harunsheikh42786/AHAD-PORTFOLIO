@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::title}, ~{::style}, ~{::script}, ~{::#content})}">
+
+<head>
+    <title th:text="'Error Page'">Error Page</title>
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(rgba(49, 154, 45, 0.614), rgba(0, 0, 0, 0.414)), url('/bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .error-img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .home-btn {
+            margin-top: 20px;
+            padding: 10px 25px;
+            font-size: 18px;
+            border-radius: 30px;
+            background-color: #319a2d;
+            color: #fff;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .home-btn:hover {
+            background-color: #267522;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content" class="container-fluid vh-100 d-flex justify-content-center align-items-center">
+        <div class="container text-center px-3">
+
+            <!-- Error Image Placeholder -->
+            <img th:src="@{/error.png}" alt="Error Image" class="error-img mb-4 mx-auto d-block">
+
+            <!-- Error Message -->
+            <h2 class="text-light">Oops! Something went wrong</h2>
+            <p class="mt-2 mx-5 px-lg-5 text-light" th:text="${errorMessage}">
+                An unexpected error occurred. Please try again later.
+            </p>
+
+            <!-- Home Button -->
+            <a th:href="@{/}" class="btn home-btn">🏠 Go Home</a>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.getElementById('home')?.classList.add('active');
+    </script>
+</body>
+
+</html>

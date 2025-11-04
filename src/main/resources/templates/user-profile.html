@@ -120,7 +120,12 @@
                         <div class="col-md-12">
                             <label for="address" class="form-label">Address</label>
                             <textarea id="address" name="address" class="form-control" rows="3"
-                                th:text="${user?.information?.address}"></textarea>
+                            th:text="${user?.information?.address}"></textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea id="description" name="description" class="form-control" rows="5"
+                                th:value="${user?.information?.description}"></textarea>
                         </div>
                     </div>
                     <div class="mt-4">

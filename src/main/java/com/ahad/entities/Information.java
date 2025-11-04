@@ -21,6 +21,9 @@ public class Information {
     private String github; // GitHub profile URL
     private String address; // User's address
 
+    @Column(length = 1000)
+    private String description;
+
     private boolean isPublic; // Whether user wants to make this information public or private
     @OneToOne
     private User user;
